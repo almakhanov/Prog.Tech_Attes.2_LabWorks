@@ -18,11 +18,14 @@ namespace Calculator
         string operation = "";
         bool floatNum = false;
         bool operand_pressed = false;
+        bool dotPressed = false;
 
         public Form1()
         {
             InitializeComponent();
-            
+            diplay.Text = "0";
+            equation.Text = "";
+            value = 0;
         }
 
         private void btn_Click(object sender, EventArgs e)
@@ -47,47 +50,80 @@ namespace Calculator
             diplay.Text = "0";
         }
 
+        private void Persentage(object sender, EventArgs e)
+        {
+            switch (operation)
+            {
+                case "+":
+                    value = value + (value / 100 * double.Parse(diplay.Text));
+                    diplay.Text = value.ToString();
+                    dotPressed = false;
+                    break;
+                case "-":
+                    value = value - (value / 100 * double.Parse(diplay.Text));
+                    diplay.Text = value.ToString();
+                    dotPressed = false;
+                    break;
+                case "x":
+                    value = value / 100 * double.Parse(diplay.Text);
+                    dotPressed = false;
+                    diplay.Text = value.ToString();
+                    break;
+            }
+        }
+
         private void operands(object sender, EventArgs e)
         {
-
+            dotPressed = false;
             Button btn = (Button)sender;
             value = double.Parse(diplay.Text);
             operation = btn.Text;
-            operand_pressed = true;          
-            //diplay.Text = "0";
+            operand_pressed = true;
+            equation.Text = value + " " + operation;
 
         }
 
         private void result_Click(object sender, EventArgs e)
         {
+            dotPressed = false;
+
+            for (int i = 0; i < diplay.Text.Length; i++)
+            {
+                if (diplay.Text[i] == ',')
+                {
+                    dotPressed = true;
+                }
+            }
+            equation.Text = "";
             switch (operation)
             {
                 case "+":
                     value = value + (double.Parse(diplay.Text));
                     diplay.Text = value.ToString();
+                    dotPressed = false;
                     break;
                 case "-":
                     value = value - (double.Parse(diplay.Text));
                     diplay.Text = value.ToString();
+                    dotPressed = false;
+                    
                     break;
                 case "x":
                     value = value * (double.Parse(diplay.Text));
                     diplay.Text = value.ToString();
+                    dotPressed = false;
                     break;
                 case "/":
                     value = value / (double.Parse(diplay.Text));
                     diplay.Text = value.ToString();
+                    dotPressed = false;
                     break;
-                case "%":
-                    
-                    value = (value) / (double.Parse(diplay.Text)) * 100;                    
-                    diplay.Text = value.ToString();
-                    break;
-                case "mod":
+                case "div":
                     value = Convert.ToInt32(value);
-                    value = (value) / (int.Parse(diplay.Text));
-                    value = Convert.ToInt32(value - 0.99);
+                    value = (value) % (int.Parse(diplay.Text));
+                    value = Convert.ToInt32(value);
                     diplay.Text = value.ToString();
+
                     break;
             }
         }
@@ -135,6 +171,7 @@ namespace Calculator
         private void Clear_all_Click(object sender, EventArgs e)
         {
             diplay.Text = "0";
+            equation.Text = "";
             value = 0;
         }
 
@@ -147,14 +184,48 @@ namespace Calculator
 
         private void dot_Click(object sender, EventArgs e)
         {
-            if (value >= 0)
-            {                
-                diplay.Text = diplay.Text + ",";
-                value = double.Parse(diplay.Text);
-                diplay.Text = value.ToString();
+            for(int i = 0; i < diplay.Text.Length; i++)
+            {
+                if(diplay.Text[i] == ',')
+                {
+                    dotPressed = true;
+                }
             }
-            else
-               dot.Enabled = false;
+
+            if (!dotPressed)
+            {
+                Button btn = (Button)sender;
+                diplay.Text += btn.Text;
+                btn.Enabled = false;
+                dotPressed = true;
+            }
+            if (dotPressed)
+            {
+                Button btn = (Button)sender;
+                btn.Enabled = true;
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MR_Click(object sender, EventArgs e)
+        {
+            diplay.Text = memory.ToString();
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            Button btn = sender as Button;
+            btn.BackColor = Color.Gray;
+        }
+
+        private void Form1_MouseLeave(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            btn.BackColor = Color.White;
         }
     }
 }
