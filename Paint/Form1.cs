@@ -102,7 +102,7 @@ namespace Paint
                     case Shapes.FloodFill:
                         currentPoint = e.Location;
                         Random rand = new Random();
-                        g.DrawEllipse(new Pen(Color.FromArgb(rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255)), 2), 
+                        g.DrawEllipse(new Pen(Color.FromArgb(rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255)), penSize), 
                             currentPoint.X - 30, currentPoint.Y - 30, 30, 30);
                         break;
                     default:
