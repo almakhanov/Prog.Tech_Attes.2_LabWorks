@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +40,7 @@ namespace Paint
             bmp = new Bitmap(paper.Width, paper.Height);
             paper.Image = bmp;
             g = Graphics.FromImage(paper.Image);
+            
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -81,7 +83,15 @@ namespace Paint
                             Math.Abs(currentPoint.X - prevPoint.X), Math.Abs(currentPoint.Y - prevPoint.Y)));   
                             break;
                     case Shapes.Triangle:
-
+                        currentPoint = e.Location;
+                        gp.Reset();
+                        Point[] points = {new Point((Math.Min(prevPoint.X, currentPoint.X))+ Math.Abs(currentPoint.X - prevPoint.X)/2,
+                            Math.Min(prevPoint.Y, currentPoint.Y)),
+                            new Point((Math.Min(prevPoint.X, currentPoint.X))+ Math.Abs(currentPoint.X - prevPoint.X),
+                            Math.Min(prevPoint.Y, currentPoint.Y)+Math.Abs(currentPoint.Y - prevPoint.Y)),
+                            new Point((Math.Min(prevPoint.X, currentPoint.X)),
+                            Math.Min(prevPoint.Y, currentPoint.Y)+Math.Abs(currentPoint.Y - prevPoint.Y))};
+                        gp.AddPolygon(points);
                         break;
                     case Shapes.Eraser:
                         currentPoint = e.Location;
@@ -107,7 +117,8 @@ namespace Paint
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            paper.BackColor = Color.White;
+            g.FillRectangle(new Pen(Color.White).Brush, new Rectangle(0, 0, paper.Width, paper.Height));
         }
 
         private void RectBtn_Click(object sender, EventArgs e)
@@ -160,6 +171,101 @@ namespace Paint
         {
             g.DrawPath(new Pen(color, penSize), gp);
             gp.Reset();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                DialogResult result = MessageBox.Show("Do you want to save document?", "Paint", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                    Close();
+                }
+                else if(result == DialogResult.Yes)
+                {
+                    SaveFileDialog sfd = new SaveFileDialog();
+                    sfd.Filter = "Images|*.png;*.bmp;*.jpg";
+                    ImageFormat format = ImageFormat.Png;
+                    if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        string ext = System.IO.Path.GetExtension(sfd.FileName);
+                        switch (ext)
+                        {
+                            case ".jpg":
+                                format = ImageFormat.Jpeg;
+                                break;
+                            case ".bmp":
+                                format = ImageFormat.Bmp;
+                                break;
+                        }
+                        paper.Image.Save(sfd.FileName, format);
+                    }
+                }
+                
+                
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Images|*.png;*.bmp;*.jpg";
+            ImageFormat format = ImageFormat.Png;
+            if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string ext = System.IO.Path.GetExtension(sfd.FileName);
+                switch (ext)
+                {
+                    case ".jpg":
+                        format = ImageFormat.Jpeg;
+                        break;
+                    case ".bmp":
+                        format = ImageFormat.Bmp;
+                        break;
+                }
+                paper.Image.Save(sfd.FileName, format);
+            }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new OpenFileDialog())
+            {
+                dlg.Title = "Open Image";
+                dlg.Filter = "Images|*.png;*.bmp;*.jpg";
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    //paper.Image = new Bitmap(dlg.FileName);
+                    //paper.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                    g.DrawImage(new Bitmap(dlg.FileName),0,0);
+                    
+                }
+            }
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            color = Color.Black;
+            currentShape = Shapes.Free;       
+            penSize = 1;
+            paper.BackColor = Color.White;
+            g.FillRectangle(new Pen(Color.White).Brush, new Rectangle(0, 0, paper.Width, paper.Height));
+            Refresh();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Author: Nursultan Almakhanov\nSubject: Programming Technologies\nDate: 04, March, 2017", "Paint",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
