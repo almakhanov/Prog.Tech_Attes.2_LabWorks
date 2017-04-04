@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "e.Graphics", "e.Graphics\e.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphOOP", "GraphOOP\GraphOOP.csproj", "{75F66CCE-41BD-426D-9751-BBD8739A9ECF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enum_and_Delegate", "Enum_and_Delegate\Enum_and_Delegate.csproj", "{9F40F925-814E-4074-9DC0-18D2DDA4B6CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{75F66CCE-41BD-426D-9751-BBD8739A9ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75F66CCE-41BD-426D-9751-BBD8739A9ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75F66CCE-41BD-426D-9751-BBD8739A9ECF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F40F925-814E-4074-9DC0-18D2DDA4B6CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F40F925-814E-4074-9DC0-18D2DDA4B6CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F40F925-814E-4074-9DC0-18D2DDA4B6CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F40F925-814E-4074-9DC0-18D2DDA4B6CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
