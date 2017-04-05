@@ -20,7 +20,8 @@ namespace Paint
         Rectangle,
         Triangle,
         Eraser,
-        FloodFill
+        FloodFill,
+        Spray
     }
 
     public partial class Form1 : Form
@@ -40,12 +41,15 @@ namespace Paint
             bmp = new Bitmap(paper.Width, paper.Height);
             paper.Image = bmp;
             g = Graphics.FromImage(paper.Image);
+
             
+
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawPath(new Pen(color, penSize), gp);
+            
         }
 
         private void paper_MouseDown(object sender, MouseEventArgs e)
@@ -104,6 +108,16 @@ namespace Paint
                         Random rand = new Random();
                         g.DrawEllipse(new Pen(Color.FromArgb(rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255)), penSize), 
                             currentPoint.X - 30, currentPoint.Y - 30, 30, 30);
+
+                        /*currentPoint = e.Location;
+                        g.DrawRectangle(new Pen(color, 1), prevPoint.X, prevPoint.Y, 1, 1);*/
+                        break;
+                    case Shapes.Spray:
+                        currentPoint = e.Location;
+                        Random rnd = new Random();
+
+                        g.FillEllipse(new Pen(Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255)), penSize).Brush,
+                            currentPoint.X - rnd.Next(0, penSize*10), currentPoint.Y - rnd.Next(0, penSize*10), penSize+1, penSize+1);
                         break;
                     default:
                         break;
@@ -156,6 +170,7 @@ namespace Paint
             {
                 color = c.Color;
                 ColorShow.BackColor = color;
+                ColorBtn.ForeColor = color;
             }
         }
 
@@ -260,8 +275,12 @@ namespace Paint
             color = Color.Black;
             currentShape = Shapes.Free;       
             penSize = 1;
+            PenSizeBtn.Value = 1;
             paper.BackColor = Color.White;
             g.FillRectangle(new Pen(Color.White).Brush, new Rectangle(0, 0, paper.Width, paper.Height));
+            ColorShow.BackColor = color;
+            ColorBtn.ForeColor = color;
+            label1.Text = "PenSize: 1";
             Refresh();
         }
 
@@ -269,6 +288,11 @@ namespace Paint
         {
             MessageBox.Show("Author: Nursultan Almakhanov\nSubject: Programming Technologies\nDate: 04, March, 2017", "Paint",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void sprayBtn_Click(object sender, EventArgs e)
+        {
+            currentShape = Shapes.Spray;
         }
     }
 }

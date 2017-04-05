@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.paper = new System.Windows.Forms.PictureBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.MouseLocation = new System.Windows.Forms.ToolStripLabel();
@@ -35,6 +36,7 @@
             this.ColorBtn = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,8 +50,9 @@
             this.ColorShow = new System.Windows.Forms.PictureBox();
             this.EraseBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.sprayBtn = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.paper)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -60,7 +63,7 @@
             // paper
             // 
             this.paper.BackColor = System.Drawing.Color.White;
-            this.paper.Location = new System.Drawing.Point(100, 32);
+            this.paper.Location = new System.Drawing.Point(100, 31);
             this.paper.Name = "paper";
             this.paper.Size = new System.Drawing.Size(434, 342);
             this.paper.TabIndex = 0;
@@ -101,10 +104,10 @@
             // 
             // ColorBtn
             // 
-            this.ColorBtn.Font = new System.Drawing.Font("Papyrus", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ColorBtn.Location = new System.Drawing.Point(0, 56);
+            this.ColorBtn.Font = new System.Drawing.Font("Papyrus", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ColorBtn.Location = new System.Drawing.Point(5, 331);
             this.ColorBtn.Name = "ColorBtn";
-            this.ColorBtn.Size = new System.Drawing.Size(99, 31);
+            this.ColorBtn.Size = new System.Drawing.Size(90, 34);
             this.ColorBtn.TabIndex = 3;
             this.ColorBtn.Text = "Colors";
             this.ColorBtn.UseVisualStyleBackColor = true;
@@ -133,24 +136,31 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(45, 25);
             this.fileToolStripMenuItem.Text = "&File";
             // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(117, 26);
+            this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(117, 26);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(117, 26);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(117, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -164,7 +174,7 @@
             // LineBtn
             // 
             this.LineBtn.Font = new System.Drawing.Font("Papyrus", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LineBtn.Location = new System.Drawing.Point(0, 84);
+            this.LineBtn.Location = new System.Drawing.Point(0, 90);
             this.LineBtn.Name = "LineBtn";
             this.LineBtn.Size = new System.Drawing.Size(99, 31);
             this.LineBtn.TabIndex = 5;
@@ -175,7 +185,7 @@
             // RectBtn
             // 
             this.RectBtn.Font = new System.Drawing.Font("Papyrus", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RectBtn.Location = new System.Drawing.Point(0, 112);
+            this.RectBtn.Location = new System.Drawing.Point(0, 120);
             this.RectBtn.Name = "RectBtn";
             this.RectBtn.Size = new System.Drawing.Size(99, 31);
             this.RectBtn.TabIndex = 6;
@@ -185,7 +195,7 @@
             // 
             // PenSizeBtn
             // 
-            this.PenSizeBtn.Location = new System.Drawing.Point(0, 285);
+            this.PenSizeBtn.Location = new System.Drawing.Point(0, 294);
             this.PenSizeBtn.Minimum = 1;
             this.PenSizeBtn.Name = "PenSizeBtn";
             this.PenSizeBtn.Size = new System.Drawing.Size(99, 45);
@@ -196,7 +206,7 @@
             // TrianBtn
             // 
             this.TrianBtn.Font = new System.Drawing.Font("Papyrus", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TrianBtn.Location = new System.Drawing.Point(0, 141);
+            this.TrianBtn.Location = new System.Drawing.Point(0, 150);
             this.TrianBtn.Name = "TrianBtn";
             this.TrianBtn.Size = new System.Drawing.Size(99, 31);
             this.TrianBtn.TabIndex = 8;
@@ -207,7 +217,7 @@
             // EllipseBtn
             // 
             this.EllipseBtn.Font = new System.Drawing.Font("Papyrus", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EllipseBtn.Location = new System.Drawing.Point(0, 170);
+            this.EllipseBtn.Location = new System.Drawing.Point(0, 180);
             this.EllipseBtn.Name = "EllipseBtn";
             this.EllipseBtn.Size = new System.Drawing.Size(99, 31);
             this.EllipseBtn.TabIndex = 9;
@@ -218,7 +228,7 @@
             // FloodBtn
             // 
             this.FloodBtn.Font = new System.Drawing.Font("Papyrus", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FloodBtn.Location = new System.Drawing.Point(0, 199);
+            this.FloodBtn.Location = new System.Drawing.Point(0, 210);
             this.FloodBtn.Name = "FloodBtn";
             this.FloodBtn.Size = new System.Drawing.Size(99, 31);
             this.FloodBtn.TabIndex = 10;
@@ -229,16 +239,16 @@
             // ColorShow
             // 
             this.ColorShow.BackColor = System.Drawing.Color.Black;
-            this.ColorShow.Location = new System.Drawing.Point(8, 335);
+            this.ColorShow.Location = new System.Drawing.Point(0, 322);
             this.ColorShow.Name = "ColorShow";
-            this.ColorShow.Size = new System.Drawing.Size(82, 31);
+            this.ColorShow.Size = new System.Drawing.Size(99, 52);
             this.ColorShow.TabIndex = 11;
             this.ColorShow.TabStop = false;
             // 
             // EraseBtn
             // 
             this.EraseBtn.Font = new System.Drawing.Font("Papyrus", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EraseBtn.Location = new System.Drawing.Point(0, 229);
+            this.EraseBtn.Location = new System.Drawing.Point(0, 240);
             this.EraseBtn.Name = "EraseBtn";
             this.EraseBtn.Size = new System.Drawing.Size(99, 31);
             this.EraseBtn.TabIndex = 12;
@@ -250,30 +260,22 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Papyrus", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 263);
+            this.label1.Location = new System.Drawing.Point(6, 273);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(84, 21);
             this.label1.TabIndex = 13;
             this.label1.Text = "PenSize: 1";
             // 
-            // label2
+            // sprayBtn
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Papyrus", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(21, 311);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 19);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "Color";
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
-            this.newToolStripMenuItem.Text = "New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            this.sprayBtn.Font = new System.Drawing.Font("Papyrus", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sprayBtn.Location = new System.Drawing.Point(0, 60);
+            this.sprayBtn.Name = "sprayBtn";
+            this.sprayBtn.Size = new System.Drawing.Size(99, 31);
+            this.sprayBtn.TabIndex = 14;
+            this.sprayBtn.Text = "Spray";
+            this.sprayBtn.UseVisualStyleBackColor = true;
+            this.sprayBtn.Click += new System.EventHandler(this.sprayBtn_Click);
             // 
             // Form1
             // 
@@ -281,14 +283,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SkyBlue;
             this.ClientSize = new System.Drawing.Size(537, 400);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.sprayBtn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.EraseBtn);
-            this.Controls.Add(this.ColorShow);
             this.Controls.Add(this.FloodBtn);
             this.Controls.Add(this.EllipseBtn);
             this.Controls.Add(this.TrianBtn);
-            this.Controls.Add(this.PenSizeBtn);
             this.Controls.Add(this.RectBtn);
             this.Controls.Add(this.LineBtn);
             this.Controls.Add(this.ColorBtn);
@@ -296,6 +296,8 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.paper);
+            this.Controls.Add(this.ColorShow);
+            this.Controls.Add(this.PenSizeBtn);
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -337,9 +339,11 @@
         private System.Windows.Forms.PictureBox ColorShow;
         private System.Windows.Forms.Button EraseBtn;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button sprayBtn;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
