@@ -277,6 +277,10 @@
             this.sprayBtn.UseVisualStyleBackColor = true;
             this.sprayBtn.Click += new System.EventHandler(this.sprayBtn_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 10;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);

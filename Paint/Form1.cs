@@ -54,7 +54,7 @@ namespace Paint
 
         private void paper_MouseDown(object sender, MouseEventArgs e)
         {
-            prevPoint = e.Location;
+            prevPoint = e.Location;           
         }
 
         private void paper_MouseMove(object sender, MouseEventArgs e)
@@ -113,11 +113,10 @@ namespace Paint
                         g.DrawRectangle(new Pen(color, 1), prevPoint.X, prevPoint.Y, 1, 1);*/
                         break;
                     case Shapes.Spray:
-                        currentPoint = e.Location;
                         Random rnd = new Random();
-
-                        g.FillEllipse(new Pen(Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255)), penSize).Brush,
-                            currentPoint.X - rnd.Next(0, penSize*10), currentPoint.Y - rnd.Next(0, penSize*10), penSize+1, penSize+1);
+                        currentPoint = e.Location;
+                            g.FillEllipse(new Pen(color,3).Brush,currentPoint.X - rnd.Next(0, 10+penSize), currentPoint.Y - rnd.Next(0, 10+penSize), 3, 3);
+                            paper.Refresh();                    
                         break;
                     default:
                         break;
