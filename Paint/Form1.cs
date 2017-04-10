@@ -54,8 +54,55 @@ namespace Paint
 
         private void paper_MouseDown(object sender, MouseEventArgs e)
         {
-            prevPoint = e.Location;           
+            prevPoint = e.Location;
+            switch (currentShape)
+            {
+                case Shapes.Free:
+                    break;
+                case Shapes.Line:
+                    break;
+                case Shapes.Ellipse:
+                    break;
+                case Shapes.Rectangle:
+                    break;
+                case Shapes.Triangle:
+                    break;
+                case Shapes.Eraser:
+                    break;
+                case Shapes.FloodFill:
+                    Fill(bmp, prevPoint, bmp.GetPixel(prevPoint.X, prevPoint.Y), color);
+                    break;
+                case Shapes.Spray:
+                    break;
+                default:
+                    break;
+            }
         }
+
+        private void Fill(Bitmap bmp, Point pt, Color groundColor, Color replaceColor)
+        {
+            Queue<Point> pixels = new Queue<Point>();
+            groundColor = bmp.GetPixel(pt.X, pt.Y);
+            pixels.Enqueue(pt);
+            while (pixels.Count > 0)
+            {
+                Point curPixel = pixels.Dequeue();  
+                if(curPixel.X < bmp.Width && curPixel.X > 0 && curPixel.Y < bmp.Height && curPixel.Y > 0)
+                {
+                    if(bmp.GetPixel(curPixel.X, curPixel.Y) == groundColor)
+                    {
+                        bmp.SetPixel(curPixel.X, curPixel.Y, replaceColor);
+                        pixels.Enqueue(new Point(curPixel.X, curPixel.Y + 1));
+                        pixels.Enqueue(new Point(curPixel.X, curPixel.Y - 1));
+                        pixels.Enqueue(new Point(curPixel.X - 1, curPixel.Y));
+                        pixels.Enqueue(new Point(curPixel.X + 1, curPixel.Y));
+                    }
+                }
+            }
+            paper.Refresh();       
+        }
+
+
 
         private void paper_MouseMove(object sender, MouseEventArgs e)
         {
@@ -104,13 +151,10 @@ namespace Paint
                         prevPoint = currentPoint;
                         break;
                     case Shapes.FloodFill:
-                        currentPoint = e.Location;
+                        /*currentPoint = e.Location;
                         Random rand = new Random();
                         g.DrawEllipse(new Pen(Color.FromArgb(rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255)), penSize), 
-                            currentPoint.X - 30, currentPoint.Y - 30, 30, 30);
-
-                        /*currentPoint = e.Location;
-                        g.DrawRectangle(new Pen(color, 1), prevPoint.X, prevPoint.Y, 1, 1);*/
+                            currentPoint.X - 30, currentPoint.Y - 30, 30, 30);*/
                         break;
                     case Shapes.Spray:
                         Random rnd = new Random();
@@ -235,7 +279,7 @@ namespace Paint
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "Images|*.png;*.bmp;*.jpg";
             ImageFormat format = ImageFormat.Png;
-            if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
                 string ext = System.IO.Path.GetExtension(sfd.FileName);
                 switch (ext)
@@ -293,5 +337,7 @@ namespace Paint
         {
             currentShape = Shapes.Spray;
         }
+
+
     }
 }
