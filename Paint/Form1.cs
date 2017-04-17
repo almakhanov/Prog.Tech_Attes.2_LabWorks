@@ -73,11 +73,26 @@ namespace Paint
                     Fill(bmp, prevPoint, bmp.GetPixel(prevPoint.X, prevPoint.Y), color);
                     break;
                 case Shapes.Spray:
+                    timer1.Enabled = true;
+                    timer1.Tick += Timer1_Tick;
+                    prP = e.Location;
+                    
                     break;
                 default:
                     break;
             }
         }
+        Point prP;
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            if (prP != null)
+            {
+                Random rnd = new Random();
+                g.FillEllipse(new Pen(color, 3).Brush, prP.X - rnd.Next(0, 15 + penSize), prP.Y - rnd.Next(0, 15 + penSize), 2, 2);
+                paper.Refresh();
+            }
+        }
+
 
         private void Fill(Bitmap bmp, Point pt, Color groundColor, Color replaceColor)
         {
@@ -157,10 +172,9 @@ namespace Paint
                             currentPoint.X - 30, currentPoint.Y - 30, 30, 30);*/
                         break;
                     case Shapes.Spray:
-                        Random rnd = new Random();
-                        currentPoint = e.Location;
-                            g.FillEllipse(new Pen(color,3).Brush,currentPoint.X - rnd.Next(0, 10+penSize), currentPoint.Y - rnd.Next(0, 10+penSize), 3, 3);
-                            paper.Refresh();                    
+                        //timer1.Enabled = true;
+                        //Spr(e.Location);
+                        prP = e.Location;
                         break;
                     default:
                         break;
@@ -231,6 +245,7 @@ namespace Paint
         private void paper_MouseUp(object sender, MouseEventArgs e)
         {
             g.DrawPath(new Pen(color, penSize), gp);
+            timer1.Enabled = false;
             gp.Reset();
         }
 

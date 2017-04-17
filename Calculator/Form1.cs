@@ -38,7 +38,7 @@ namespace Calculator
             if (operand_pressed)
             {
                 diplay.Clear();
-                operand_pressed = false;
+                //operand_pressed = false;
             }
             Button btn = (Button)sender;
             diplay.Text += btn.Text;
@@ -74,18 +74,33 @@ namespace Calculator
 
         private void operands(object sender, EventArgs e)
         {
-            dotPressed = false;
-            Button btn = (Button)sender;
-            value = double.Parse(diplay.Text);
-            operation = btn.Text;
+            
+            if (operand_pressed)
+            {
+                Button btn2 = (Button)sender;
+                value = value + double.Parse(diplay.Text);
+                operation = btn2.Text;
+                equation.Text = value + " " + operation;
+                diplay.Text = value.ToString();
+                dotPressed = false;
+            }
+            else
+            {
+                dotPressed = false;
+                Button btn = (Button)sender;
+                value = double.Parse(diplay.Text);
+                operation = btn.Text;
+                operand_pressed = true;
+                equation.Text = value + " " + operation;
+            }
             operand_pressed = true;
-            equation.Text = value + " " + operation;
 
         }
 
         private void result_Click(object sender, EventArgs e)
         {
             dotPressed = false;
+            operand_pressed = false;
 
             for (int i = 0; i < diplay.Text.Length; i++)
             {
