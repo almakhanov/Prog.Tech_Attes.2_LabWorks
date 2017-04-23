@@ -10,7 +10,8 @@ namespace GraphOOP
     class Ellipse : Figure
     {    
         public Ellipse(int _x, int _y, int _width, int _heght, Pen _pen) : base (_x, _y, _width, _heght, _pen) { }
-        public void Drow(Graphics g)
+
+        public override void Drow(Graphics g)
         {
             g.FillEllipse(pen.Brush, new Rectangle(x, y, width, heght));
         }

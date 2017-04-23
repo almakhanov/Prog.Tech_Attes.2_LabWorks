@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GraphOOP
 {
-    class Figure
+    public abstract class Figure : IDrawable
     {
         public int x;
         public int y;
@@ -23,5 +23,7 @@ namespace GraphOOP
             heght = _heght;
             pen = _pen;
         }
+
+        public abstract void Drow(Graphics g);
     }
 }

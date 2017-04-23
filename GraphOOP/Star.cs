@@ -10,7 +10,8 @@ namespace GraphOOP
     class Star : Figure
     {
         public Star(int x, int y, int width, int height, Pen pen):base(x,y,width,height, pen) { }
-        public void Drow(Graphics g)
+
+        public override void Drow(Graphics g)
         {
             Point[] up = { new Point(x + width / 2, y), new Point(x + width, y + heght / 4 * 3),
                 new Point(x, y + heght / 4 * 3), new Point(x + width / 2, y) };
@@ -20,5 +21,6 @@ namespace GraphOOP
             g.FillPolygon(pen.Brush, up);
             g.FillPolygon(pen.Brush, down);
         }
+
     }
 }

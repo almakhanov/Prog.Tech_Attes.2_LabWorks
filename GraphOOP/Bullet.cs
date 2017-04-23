@@ -11,7 +11,7 @@ namespace GraphOOP
     {
         public Bullet(int _x, int _y, int _width, int _heght, Pen _pen) : base (_x, _y, _width, _heght, _pen) { }
 
-        public void Drow(Graphics g)
+        public override void Drow(Graphics g)
         {
             Point[] ver = { new Point(x+width/2, y), new Point(x+width*3/4, y + heght/2), new Point(x+width/2, y+heght),
                 new Point(x+width/4, y+heght/2), new Point(x + width / 2, y) };

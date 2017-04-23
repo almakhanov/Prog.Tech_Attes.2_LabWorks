@@ -279,7 +279,7 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 10;
+            this.timer1.Interval = 1;
             // 
             // Form1
             // 

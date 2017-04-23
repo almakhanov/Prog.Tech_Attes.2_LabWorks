@@ -40,9 +40,7 @@ namespace Paint
             InitializeComponent();
             bmp = new Bitmap(paper.Width, paper.Height);
             paper.Image = bmp;
-            g = Graphics.FromImage(paper.Image);
-
-            
+            g = Graphics.FromImage(paper.Image);      
 
         }
 
@@ -88,7 +86,7 @@ namespace Paint
             if (prP != null)
             {
                 Random rnd = new Random();
-                g.FillEllipse(new Pen(color, 3).Brush, prP.X - rnd.Next(0, 15 + penSize), prP.Y - rnd.Next(0, 15 + penSize), 2, 2);
+                g.FillEllipse(new Pen(color, 3).Brush, prP.X - rnd.Next(0, 15 + penSize), prP.Y - rnd.Next(0, 15 + penSize), 3, 3);
                 paper.Refresh();
             }
         }
@@ -172,8 +170,6 @@ namespace Paint
                             currentPoint.X - 30, currentPoint.Y - 30, 30, 30);*/
                         break;
                     case Shapes.Spray:
-                        //timer1.Enabled = true;
-                        //Spr(e.Location);
                         prP = e.Location;
                         break;
                     default:
@@ -258,7 +254,8 @@ namespace Paint
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                DialogResult result = MessageBox.Show("Do you want to save document?", "Paint", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("Do you want to save document?", "Paint", 
+                    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Cancel)
                 {
                     e.Cancel = true;

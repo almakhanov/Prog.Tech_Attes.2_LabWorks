@@ -78,8 +78,34 @@ namespace Calculator
             if (operand_pressed)
             {
                 Button btn2 = (Button)sender;
-                value = value + double.Parse(diplay.Text);
                 operation = btn2.Text;
+                switch (operation)
+                {
+                    case "+":
+                        value = value + (double.Parse(diplay.Text));
+                        diplay.Text = value.ToString();
+                        dotPressed = false;
+                        break;
+                    case "-":
+                        value = value - (double.Parse(diplay.Text));
+                        diplay.Text = value.ToString();
+                        dotPressed = false;
+
+                        break;
+                    case "x":
+                        value = value * (double.Parse(diplay.Text));
+                        diplay.Text = value.ToString();
+                        dotPressed = false;
+                        break;
+                    case "/":
+                        value = value / (double.Parse(diplay.Text));
+                        diplay.Text = value.ToString();
+                        dotPressed = false;
+                        break;
+                    default:
+                        break;
+                }
+                
                 equation.Text = value + " " + operation;
                 diplay.Text = value.ToString();
                 dotPressed = false;
